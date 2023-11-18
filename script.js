@@ -60,15 +60,10 @@ function playRound(playerChoice, computerChoice) {
     }
 }
 
-console.log('computerChoice = ' + computerChoice)
-console.log('playerChoice = ' + playerChoice)
-
 function game() {
     console.log('game started')
     for (let i = 0; i < 5; i++) {
         playRound(playerChoice, computerChoice);
-        playerChoice = "";
-        computerChoice = "";
     }
 
     let finalResult;
