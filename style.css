@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Rubik', sans-serif;
+}
+
+/* header */
+
+#header {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+#header h1 {
+    text-align: center;
+    margin: 0;
+    padding: 1rem;
+}
+#header p {
+    text-align: center;
+    margin: 0;
+}
+
+/* body */
+
+#body {
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+#round-record {
+    background-color: beige;
+    border-radius: 0.25rem;
+    flex: 1 1 8rem;
+}
+#round-results {
+    margin: 1rem;
+}
+#round-result {
+    font-weight: 700;
+}
+#game {
+    flex: 2 1 auto;
+}
+
+/* scores */
+
+#scores {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.scorecard {
+    flex: 1 1 8rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: .25rem;
+}
+.scorecard * {
+    margin: 0;
+    
+}
+.scorecard.player {
+    background-color: lightskyblue;
+}
+.scorecard.computer {
+    background-color: coral;
+}
+.scorecard .score-num {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* buttons */
+
+#buttons-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#buttons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+}
+#buttons * {
+    padding: 4rem 1rem;
+    flex: 1 1 8rem;
+}

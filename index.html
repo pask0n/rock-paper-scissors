@@ -5,28 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1>Rock Paper Scissors</h1>
-    <p>made by bankl. First to Three. Scores resets automatically.</p>
-    <div class="scores">
-        <p>Player :</p>
-        <p id="player-score-dis">0</p>
-        <p>Computer :</p>
-        <p id="computer-score-dis">0</p>
+    <div id="header">
+        <h1>Rock Paper Scissors</h1>
+        <p>by bankl</p>
+        <p>First to Three. Scores reset automatically.</p>
     </div>
-    <div id="final-result"></div>
-    <div class="buttons">
-        <button id="btn-rock" class="choice-btn">Rock</button>
-        <button id="btn-paper" class="choice-btn">Paper</button>
-        <button id="btn-scissors" class="choice-btn">Scissors</button>
+    <div id="body">
+        <div id="game">
+            <div id="scores">
+                <div class="scorecard player">
+                    <p>Player :</p>
+                    <p id="player-score-dis" class="score-num">0</p>
+                </div>
+                <div class="scorecard computer">
+                    <p>Computer :</p>
+                    <p id="computer-score-dis" class="score-num">0</p>
+                </div>
+            </div>
+            <div id="final-result"></div>
+            <div id="buttons-div">
+                <p>Choose your next move</p>
+                <div id="buttons">
+                    <button id="btn-rock" class="choice-btn">🪨 Rock</button>
+                    <button id="btn-paper" class="choice-btn">📄 Paper</button>
+                    <button id="btn-scissors" class="choice-btn">✂️ Scissors</button>
+                </div>
+            </div>
+        </div>
+        <div id="round-record">
+            <div id="round-results">
+                <p id="round-move-player"></p>
+                <p id="round-move-computer"></p>
+                <p id="round-result"></p>
+            </div>            
+        </div>
     </div>
-    <div id="round-results">
-        <p id="round-move-player"></p>
-        <p id="round-move-computer"></p>
-        <p id="round-result"></p>
-    </div>
-    
-    
 </body>
 </html>
