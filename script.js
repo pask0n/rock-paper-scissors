@@ -14,6 +14,8 @@ function getComputerChoice() {
 
 const playerScDis = document.querySelector('#player-score-dis')
 const computerScDis = document.querySelector('#computer-score-dis')
+const playerScText = document.querySelector('#player-score-text')
+const computerScText = document.querySelector('#computer-score-text')
 
 const finalResult = document.querySelector('#final-result')
 
@@ -21,58 +23,64 @@ const btnRock = document.querySelector('#btn-rock');
 const btnPaper = document.querySelector('#btn-paper');
 const btnScissors = document.querySelector('#btn-scissors');
 
-const roundMovePlayer = document.querySelector('#round-move-player')
-const roundMoveComputer = document.querySelector('#round-move-computer')
-const roundResult = document.querySelector('#round-result')
+const records = document.querySelector('#records')
 
 btnRock.addEventListener('click', () => {
+    clearRecords();
     playRound('Rock',getComputerChoice());
     updateScoreDis();
+    resetGame();
 })
 btnPaper.addEventListener('click', () => {
+    clearRecords();
     playRound('Paper',getComputerChoice());
     updateScoreDis();
+    resetGame();
 })
 btnScissors.addEventListener('click', () => {
+    clearRecords();
     playRound('Scissors',getComputerChoice());
     updateScoreDis();
+    resetGame();
 })
 
 let playerScore = 0;
 let computerScore = 0;
+let roundNo = 0;
+let roundJustReset = false;
 
 function playRound(playerChoice, computerChoice) {
     if (playerChoice === computerChoice) {
-        displayRoundResultDraw(playerChoice, computerChoice)
+        recordRound(playerChoice, computerChoice, 'Draw')
     } else if (
         playerChoice === 'Rock'
         && computerChoice === 'Paper') {
-            displayRoundResultLose(playerChoice, computerChoice)
+            recordRound(playerChoice, computerChoice, 'COM Win')
             computerScore += 1
     } else if (
         playerChoice === 'Rock'
         && computerChoice === 'Scissors') {
-            displayRoundResultWin(playerChoice, computerChoice)
+            recordRound(playerChoice, computerChoice, 'PLA Win')
             playerScore += 1
     } else if (
         playerChoice === 'Paper'
         && computerChoice === 'Rock') {  
-            displayRoundResultWin(playerChoice, computerChoice)
+            recordRound(playerChoice, computerChoice, 'PLA Win')
             playerScore += 1
     } else if (
         playerChoice === 'Paper'
         && computerChoice === 'Scissors') {
-            displayRoundResultLose(playerChoice, computerChoice)
+            recordRound(playerChoice, computerChoice, 'COM Win')
             computerScore += 1
     } else if (
         playerChoice === 'Scissors'
         && computerChoice === 'Rock') {
-            displayRoundResultLose(playerChoice, computerChoice)
+            recordRound(playerChoice, computerChoice, 'COM Win')
             computerScore += 1
     } else if (
         playerChoice === 'Scissors'
         && computerChoice === 'Paper') {
-            displayRoundResultWin(playerChoice, computerChoice)
+            recordRound(playerChoice, computerChoice, 'PLA Win')
             playerScore += 1
     } else {
         alert('Invalid choice. Counts as a loss')
@@ -80,22 +88,45 @@ function playRound(playerChoice, computerChoice) {
     }
 }
 
-function displayRoundResultWin(playerChoice, computerChoice) {
-    roundMovePlayer.textContent = `Your Move : ${playerChoice}`
-    roundMoveComputer.textContent = `Computer's Move : ${computerChoice}`
-    roundResult.textContent = 'You Win!'
+function recordRound(playerChoice, computerChoice, roundResult) {
+    roundNo += 1;
+    const rec = document.createElement('p')
+    rec.textContent = `${adjustMovesText(playerChoice, computerChoice)} ${roundResult}`
+    records.appendChild(rec);
 }
 
-function displayRoundResultLose(playerChoice, computerChoice) {
-    roundMovePlayer.textContent = `Your Move : ${playerChoice}`
-    roundMoveComputer.textContent = `Computer's Move : ${computerChoice}`
-    roundResult.textContent = 'You Lose!'
-}
+function adjustMovesText(playerChoice, computerChoice) {
+    let playerMoveText = '';
+    let computerMoveText = '';
+    let roundNoText = '';
 
-function displayRoundResultDraw(playerChoice, computerChoice) {
-    roundMovePlayer.textContent = `Your Move : ${playerChoice}`
-    roundMoveComputer.textContent = `Computer's Move : ${computerChoice}`
-    roundResult.textContent = 'It\'s a draw!'
+    if (playerChoice == 'Rock') {
+        playerMoveText = 'Rock    '
+    } else if (playerChoice == 'Paper') {
+        playerMoveText = 'Paper   '
+    } else if (playerChoice == 'Scissors') {
+        playerMoveText = 'Scissors'
+    } else {
+        playerMoveText = 'ERROR   '
+    }
+
+    if (computerChoice == 'Rock') {
+        computerMoveText = 'Rock    '
+    } else if (computerChoice == 'Paper') {
+        computerMoveText = 'Paper   '
+    } else if (computerChoice == 'Scissors') {
+        computerMoveText = 'Scissors'
+    } else {
+        computerMoveText = 'ERROR   '
+    }
+
+    if (roundNo < 10) {
+        roundNoText = `${roundNo}  `;
+    } else {
+        roundNoText = `${roundNo} `;
+    }
+
+    return `${roundNoText} ${playerMoveText} ${computerMoveText}`
 }
 
 function updateScoreDis() {
@@ -105,40 +136,40 @@ function updateScoreDis() {
 }
 
 function displayGameResult() {
-    finalResult.textContent = ''
+    playerScText.textContent = 'Player'
+    computerScText.textContent = 'Computer'
     if (playerScore == 3) {
-        finalResult.textContent = 'You Win!'
-        playerScore = 0;
-        computerScore = 0;
+        playerScText.textContent = 'Player Wins!'
     } else if (computerScore == 3) {
-        finalResult.textContent = 'You Lose, The Computer Wins!'
+        computerScText.textContent = 'Computer Wins!'
+    }
+}
+
+function checkGameReset() {
+    if (playerScore == 3 || computerScore == 3) {
+        return true;
+    }
+    return false;
+}
+
+function resetGame() {
+    if (checkGameReset()) {
         playerScore = 0;
         computerScore = 0;
-    } else {
-        return
+        roundNo = 0;
+        roundJustReset = true;
     }
 }
 
-function game() {
-    console.log('game started')
-    for (let i = 0; i < 5; i++) {
-        playRound(playerChoice, computerChoice);
+function clearRecords() {
+    if (roundJustReset == true) {
+        removeAllChildNodes(records);
+        roundJustReset = false;
     }
-
-    let finalResult;
-    if (playerScore > computerScore) {
-        finalResult = 'You win!'
-    } else if (computerScore > playerScore) {
-        finalResult = 'You lose!'
-    } else if (playerScore === playerScore) {
-        finalResult = 'It\'s a tie!'
-    } else {
-        return
-    }
-    
-    alert(`${finalResult}
-    Player ${playerScore}-${computerScore} Computer`)
-    console.log(`${finalResult}
-    Player ${playerScore}-${computerScore} Computer`)
 }
 
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
